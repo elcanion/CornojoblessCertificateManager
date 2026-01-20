@@ -15,10 +15,11 @@
 			</ComboBox>
 
 			<TextBox x:Name="IssuerBox" Width="300" Margin="10,0,0,0" ToolTip='The issuer name as shown in the "Issued By" column in certmgr/certlm.msc'/>
+			<CheckBox x:Name="ReadFromSettings" Content="Get issuers from appsettings" Margin="10,0,0,0" />
 			<Button Content="List" Margin="10,0,0,0" Click="OnLoad"/>
 		</StackPanel>
 
-		<DataGrid x:Name="Grid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+		<DataGrid x:Name="Grid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Subject" Binding="{Binding Subject}" Width="*"/>
 				<DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="*"/>
