@@ -7,7 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateMana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateManager.Console", "CornojoblessCertificateManager.Console\CornojoblessCertificateManager.Console.csproj", "{3745D7F5-88A1-43AA-B07C-9C3BD593BAE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateManager.UI", "CornojoblessCertificateManager.UI\CornojoblessCertificateManager.UI.csproj", "{87B83ACD-8E30-4DEF-8F0C-3CAB25BC1594}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateManager.UI", "CornojoblessCertificateManager.UI\CornojoblessCertificateManager.UI.csproj", "{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8AF6B37-7E46-4CB7-A50A-EB7F546B5722} = {D8AF6B37-7E46-4CB7-A50A-EB7F546B5722}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +26,10 @@ Global
 		{3745D7F5-88A1-43AA-B07C-9C3BD593BAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3745D7F5-88A1-43AA-B07C-9C3BD593BAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3745D7F5-88A1-43AA-B07C-9C3BD593BAE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87B83ACD-8E30-4DEF-8F0C-3CAB25BC1594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87B83ACD-8E30-4DEF-8F0C-3CAB25BC1594}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87B83ACD-8E30-4DEF-8F0C-3CAB25BC1594}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87B83ACD-8E30-4DEF-8F0C-3CAB25BC1594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

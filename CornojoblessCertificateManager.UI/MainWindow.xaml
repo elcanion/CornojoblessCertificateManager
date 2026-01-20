@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
 	<DockPanel Margin="10">
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,1">
-			
+
 			<ComboBox Width="150" x:Name="StoreCombo">
 				<ComboBoxItem Content="CurrentUser"/>
 				<ComboBoxItem Content="LocalMachine"/>

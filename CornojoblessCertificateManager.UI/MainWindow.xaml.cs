@@ -1,28 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CornojoblessCertificateManager.Core.Model;
+using CornojoblessCertificateManager.Core.Services;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace CornojoblessCertificateManager.UI
+namespace CornojoblessCertificateManager.UI;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+		StoreCombo.SelectedIndex = 0;
     }
+
+	private void OnLoad(object sender, RoutedEventArgs e) {
+		var store = StoreCombo.Text == "LocalMachine" ? StoreLocation.LocalMachine : StoreLocation.CurrentUser;
+
+		var issuer = IssuerBox.Text;
+		if (issuer != null) {
+			Grid.ItemsSource = CertificateService.GetCertificate(store, issuer);
+		}
+	}
+
+	private void OnRemove(object sender, RoutedEventArgs e) {
+		if (Grid.SelectedItem is not CertificateInfo info)
+			return;
+
+		OnLoad(null, null);
+	}
 }
