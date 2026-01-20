@@ -1,0 +1,6 @@
+@CornojoblessCertificateManager_HostAddress = http://localhost:5287
+
+GET {{CornojoblessCertificateManager_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

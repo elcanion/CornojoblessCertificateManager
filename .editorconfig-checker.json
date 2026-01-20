@@ -1,0 +1,31 @@
+{
+	"Verbose": false,
+	"IgnoreDefaults": false,
+	"Exclude": [
+		"Site/Migrations/*",
+		"Site/ClientApp/e2e/*",
+		"Site/ClientApp/package-lock.json",
+		"SignerCNB.babel.template",
+		"Tests/*",
+		"Site/ClientApp/src/assets/js/pdf2.js",
+		"Site/Resources/Services/*",
+		"Site/Resources/Error/*",
+		"Site/Resources/Business/*",
+		".idea/*",
+		"Tools/*",
+		"Api/CnbCF.Signer.Api.snk",
+		"Client/CnbCF.Signer.Client.snk",
+		".git/*",
+		"Site/Properties/launchSettings.json",
+		"Site/ClientApp/src/assets/js/*",
+		"assets/*"
+	],
+	"Disable": {
+		"EndOfLine": false,
+		"Indentation": true,
+		"IndentSize": false,
+		"InsertFinalNewline": false,
+		"TrimTrailingWhitespace": false,
+		"MaxLineLength": false
+	}
+}
