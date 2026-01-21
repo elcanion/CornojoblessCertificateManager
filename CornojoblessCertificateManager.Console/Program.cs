@@ -6,7 +6,7 @@ namespace CornojoblessCertificateManager.Console
     public class Program
     {
 		public static void Main() {
-			var certs = CertificateService.GetCertificate(StoreLocation.CurrentUser, "");
+			var certs = CertificateService.GetCertificate(StoreLocation.CurrentUser, [], false);
 		}
 	}
 }

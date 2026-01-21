@@ -5,21 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CornojoblessCertificateManager.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-	<DockPanel Margin="10">
+        Title="Cornojobless Certificate Manager" Height="450" Width="800">
+	<DockPanel Margin="10" LastChildFill="False">
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,1">
 
-			<ComboBox Width="150" x:Name="StoreCombo">
-				<ComboBoxItem Content="CurrentUser"/>
-				<ComboBoxItem Content="LocalMachine"/>
-			</ComboBox>
+			<ComboBox ItemsSource="{Binding StoreLocations}" SelectedItem="{Binding SelectedStoreLocation, Mode=TwoWay}"/>
 
 			<TextBox x:Name="IssuerBox" Width="300" Margin="10,0,0,0" ToolTip='The issuer name as shown in the "Issued By" column in certmgr/certlm.msc'/>
 			<CheckBox x:Name="ReadFromSettings" Content="Get issuers from appsettings" Margin="10,0,0,0" />
 			<Button Content="List" Margin="10,0,0,0" Click="OnLoad"/>
 		</StackPanel>
 
-		<DataGrid x:Name="Grid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
+		<DataGrid x:Name="Grid" DockPanel.Dock="Top" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Subject" Binding="{Binding Subject}" Width="*"/>
 				<DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="*"/>

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:CornojoblessCertificateManager.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+		<local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	</Application.Resources>
 </Application>
