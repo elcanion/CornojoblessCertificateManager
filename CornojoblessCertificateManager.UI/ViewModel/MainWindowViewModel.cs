@@ -10,14 +10,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
+using CornojoblessCertificateManager.Core.Services;
+using CornojoblessCertificateManager.Core.Model;
+using System.Windows.Input;
 
 namespace CornojoblessCertificateManager.UI.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged {
 
+		private readonly ICertificateService certificateService;
+		private readonly CertificateSettings settings;
+
 		public event PropertyChangedEventHandler? PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string? name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
+		public ObservableCollection<CertificateInfo> Certificates { get; } = [];
+		public ObservableCollection<StoreLocation> StoreLocations { get; } = [StoreLocation.CurrentUser, StoreLocation.LocalMachine];
+		
 		private StoreLocation selectedStoreLocation;
 		public StoreLocation SelectedStoreLocation {
 			get => selectedStoreLocation;
@@ -29,20 +37,43 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 				}
 			}
 		}
+
+		private bool onlyExpired = true;
+		public bool OnlyExpired {
+			get => onlyExpired;
+			set {
+				onlyExpired = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private bool readFromSettings;
+		public bool ReadFromSettings {
+			get => ReadFromSettings;
+			set {
+				ReadFromSettings = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public bool IsAdmin { get; }
 		public bool CanRemove => SelectedStoreLocation == StoreLocation.CurrentUser || IsAdmin;
-		public ObservableCollection<StoreLocation> StoreLocations { get; }
 
-		public MainWindowViewModel() {
+		public ICommand LoadCertificatesCommand { get; }
+
+		public MainWindowViewModel(ICertificateService certificateService, CertificateSettings settings) {
+			this.certificateService = certificateService;
+			this.settings = settings;
+
 			IsAdmin = IsRunningAsAdministrator();
 
-			StoreLocations = new ObservableCollection<StoreLocation>
-			{
-				StoreLocation.CurrentUser,
-				StoreLocation.LocalMachine
-			};
-
 			SelectedStoreLocation = StoreLocation.CurrentUser;
+
+			LoadCertificatesCommand = new RelayCommand(LoadCertificates);
+		}
+
+		private void LoadCertificates() {
+			throw new NotImplementedException();
 		}
 
 		public static bool IsRunningAsAdministrator() {
