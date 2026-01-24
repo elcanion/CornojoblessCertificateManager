@@ -1,5 +1,6 @@
 ﻿using CornojoblessCertificateManager.Core.Model;
 using CornojoblessCertificateManager.Core.Queries;
+using CornojoblessCertificateManager.Core.Requests;
 using System.Security.Cryptography.X509Certificates;
 
 namespace CornojoblessCertificateManager.Core.Services
@@ -18,7 +19,7 @@ namespace CornojoblessCertificateManager.Core.Services
 
 			if (query.Issuers.Count > 0) {
 				certs = certs.Where(c => 
-				query.Issuers.Any(i => c.Issuer.Contains(i, StringComparison.OrdinalIgnoreCase)));
+					query.Issuers.Any(i => c.Issuer.Contains(i, StringComparison.OrdinalIgnoreCase)));
 			}
 
 			return certs.Select(c => new CertificateInfo {
@@ -28,6 +29,33 @@ namespace CornojoblessCertificateManager.Core.Services
 				Expiration = c.NotAfter,
 				HasPrivateKey = c.HasPrivateKey,
 			}).ToList();
+		}
+
+		public void BackupCertificates(CertificateBackupRequest request) {
+			Directory.CreateDirectory(request.BackupDirectory);
+
+			using var store = new X509Store(StoreName.My, request.Location);
+			store.Open(OpenFlags.ReadOnly);
+
+			foreach (var info in request.Certificates) {
+				var cert = store.Certificates
+					.Find(X509FindType.FindByThumbprint, info.Thumbprint, validOnly: true)
+					.OfType<X509Certificate2>()
+					.FirstOrDefault();
+
+				if (cert != null) {
+					continue;
+				}
+
+				var fileName = $"{cert.Subject}_{cert.Thumbprint}.pfx";
+				var fullPath = Path.Combine(request.BackupDirectory, fileName);
+
+				var bytes = cert.HasPrivateKey
+					? cert.Export(X509ContentType.Pfx, request.PfxPassword)
+					: cert.Export(X509ContentType.Cert);
+
+				File.WriteAllBytes(fullPath, bytes);
+			}
 		}
     }
 }
