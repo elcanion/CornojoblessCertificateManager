@@ -3,6 +3,7 @@ using CornojoblessCertificateManager.Core.Services;
 using CornojoblessCertificateManager.UI.ViewModel;
 using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Windows;
@@ -22,55 +23,23 @@ public class StoreLocationOption {
 public partial class MainWindow : Window
 {
 	public bool? WillReadFromSettings;
-	public ObservableCollection<StoreLocation> StoreLocations { get; }
-	private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
+	public ObservableCollection<StoreLocation> StoreLocations { get; } = [];
 
-	public MainWindow()
+	public MainWindow(MainWindowViewModel viewModel)
     {
+		DataContext = viewModel;
 		InitializeComponent();
-		WillReadFromSettings = ReadFromSettings.IsChecked;
-		DataContext = new MainWindowViewModel();
-
-		Loaded += OnLoaded;
 	}
 
 	private void OnLoaded(object sender, RoutedEventArgs e) {
-		LoadCertificates();
-	}
-
-	private void LoadCertificates() {
-
-		var location = ViewModel.SelectedStoreLocation;
-		if (App.Settings != null) {
-			var issuers = App.Settings.AllowedIssuers;
-			Grid.ItemsSource = CertificateService.GetCertificate(location, issuers, WillReadFromSettings);
-		}
-		WillReadFromSettings = ReadFromSettings.IsChecked;
-
-		List<string> issuer = [];
-		if (!String.IsNullOrEmpty(IssuerBox.Text)) {
-			issuer.Add(IssuerBox.Text);
-		}
-
-		Grid.ItemsSource = CertificateService.GetCertificate(location, issuer, WillReadFromSettings);
+		throw new NotImplementedException();
 	}
 
 	private void OnLoad(object sender, RoutedEventArgs e) {
-		var location = ViewModel.SelectedStoreLocation;
-		WillReadFromSettings = ReadFromSettings.IsChecked;
-
-		List<string> issuer = [];
-		if (!String.IsNullOrEmpty(IssuerBox.Text)) {
-			issuer.Add(IssuerBox.Text);
-		}
-
-		Grid.ItemsSource = CertificateService.GetCertificate(location, issuer, WillReadFromSettings);
+		throw new NotImplementedException();
 	}
 
 	private void OnRemove(object sender, RoutedEventArgs e) {
-		if (Grid.SelectedItems is not CertificateInfo info)
-			return;
-
 		OnLoad(null, null);
 	}
 }

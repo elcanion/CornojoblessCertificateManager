@@ -50,6 +50,15 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 			}
 		}
 
+		private string issuerInput = string.Empty;
+		public string IssuerInput {
+			get => issuerInput;
+			set {
+				issuerInput = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public bool IsAdmin { get; }
 		public bool CanRemove => SelectedStoreLocation == StoreLocation.CurrentUser || IsAdmin;
 
@@ -72,6 +81,10 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 			var issuers = new List<string>();
 			if (ReadFromSettings) {
 				issuers.AddRange(settings.AllowedIssuers);
+			}
+
+			if (!string.IsNullOrWhiteSpace(IssuerInput)) {
+				issuers.Add(IssuerInput);
 			}
 
 			var query = new CertificateQuery {

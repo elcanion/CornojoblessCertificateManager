@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CornojoblessCertificateManager.UI" xmlns:viewmodel="clr-namespace:CornojoblessCertificateManager.UI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
 		mc:Ignorable="d"
-        Title="Cornojobless Certificate Manager" Height="450" Width="800">
+        Title="Cornojobless Certificate Manager" Height="700" Width="1000">
 	<DockPanel Margin="10" LastChildFill="False">
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,1">
 
 			<ComboBox ItemsSource="{Binding StoreLocations}" SelectedItem="{Binding SelectedStoreLocation}"/>
-
+			<TextBox Text="{Binding IssuerInput, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="10,0,0,0" ToolTip='The issuer name as shown in the "Issued By" column in certmgr/certlm.msc' />
 			<CheckBox Content="Get issuers from appsettings" IsChecked="{Binding ReadFromSettings}" Margin="10,0,0,0" />
 			<CheckBox Content="List only expired certificates" IsChecked="{Binding OnlyExpired}" Margin="10,0,0,0" />
 			<Button Content="List" Margin="10,0,0,0" Command="{Binding LoadCertificatesCommand}"/>
