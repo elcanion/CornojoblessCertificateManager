@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows;
 using CornojoblessCertificateManager.Core.Services;
 using CornojoblessCertificateManager.Core.Model;
 using System.Windows.Input;
+using CornojoblessCertificateManager.Core.Queries;
 
 namespace CornojoblessCertificateManager.UI.ViewModel
 {
@@ -49,9 +43,9 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 
 		private bool readFromSettings;
 		public bool ReadFromSettings {
-			get => ReadFromSettings;
+			get => readFromSettings;
 			set {
-				ReadFromSettings = value;
+				readFromSettings = value;
 				OnPropertyChanged();
 			}
 		}
@@ -73,7 +67,24 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 		}
 
 		private void LoadCertificates() {
-			throw new NotImplementedException();
+			Certificates.Clear();
+
+			var issuers = new List<string>();
+			if (ReadFromSettings) {
+				issuers.AddRange(settings.AllowedIssuers);
+			}
+
+			var query = new CertificateQuery {
+				StoreLocation = SelectedStoreLocation,
+				Issuers = issuers,
+				OnlyExpired = OnlyExpired
+			};
+
+			var result = certificateService.GetCertificates(query);
+
+			foreach(var cert in result) {
+				Certificates.Add(cert);
+			}
 		}
 
 		public static bool IsRunningAsAdministrator() {
