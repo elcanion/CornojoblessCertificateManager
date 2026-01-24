@@ -43,10 +43,6 @@ namespace CornojoblessCertificateManager.Core.Services
 					.OfType<X509Certificate2>()
 					.FirstOrDefault();
 
-				if (cert != null) {
-					continue;
-				}
-
 				var fileName = $"{cert.Subject}_{cert.Thumbprint}.pfx";
 				var fullPath = Path.Combine(request.BackupDirectory, fileName);
 
