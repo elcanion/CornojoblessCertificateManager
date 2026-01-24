@@ -19,7 +19,7 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 		public void OnPropertyChanged([CallerMemberName] string? name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 		public ObservableCollection<CertificateInfo> Certificates { get; } = [];
 		public ObservableCollection<StoreLocation> StoreLocations { get; } = [StoreLocation.CurrentUser, StoreLocation.LocalMachine];
-		
+
 		private StoreLocation selectedStoreLocation;
 		public StoreLocation SelectedStoreLocation {
 			get => selectedStoreLocation;

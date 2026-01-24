@@ -3,20 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CornojoblessCertificateManager.UI"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:CornojoblessCertificateManager.UI" xmlns:viewmodel="clr-namespace:CornojoblessCertificateManager.UI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+		mc:Ignorable="d"
         Title="Cornojobless Certificate Manager" Height="450" Width="800">
 	<DockPanel Margin="10" LastChildFill="False">
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,1">
 
-			<ComboBox ItemsSource="{Binding StoreLocations}" SelectedItem="{Binding SelectedStoreLocation, Mode=TwoWay}"/>
+			<ComboBox ItemsSource="{Binding StoreLocations}" SelectedItem="{Binding SelectedStoreLocation}"/>
 
-			<TextBox x:Name="IssuerBox" Width="300" Margin="10,0,0,0" ToolTip='The issuer name as shown in the "Issued By" column in certmgr/certlm.msc'/>
-			<CheckBox x:Name="ReadFromSettings" Content="Get issuers from appsettings" Margin="10,0,0,0" />
-			<Button Content="List" Margin="10,0,0,0" Click="OnLoad"/>
+			<CheckBox Content="Get issuers from appsettings" IsChecked="{Binding ReadFromSettings}" Margin="10,0,0,0" />
+			<CheckBox Content="List only expired certificates" IsChecked="{Binding OnlyExpired}" Margin="10,0,0,0" />
+			<Button Content="List" Margin="10,0,0,0" Command="{Binding LoadCertificatesCommand}"/>
 		</StackPanel>
 
-		<DataGrid x:Name="Grid" DockPanel.Dock="Top" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
+		<DataGrid ItemsSource="{Binding Certificates}" DockPanel.Dock="Top" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Subject" Binding="{Binding Subject}" Width="*"/>
 				<DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="*"/>
@@ -24,7 +24,6 @@
 				<DataGridTextColumn Header="Has private key" Binding="{Binding HasPrivateKey}" Width="120"/>
 			</DataGrid.Columns>
 		</DataGrid>
-
 		<Button DockPanel.Dock="Bottom" Content="Backup and remove" Height="35" Margin="0,10,0,0" Click="OnRemove"/>
 	</DockPanel>
 </Window>
