@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CornojoblessCertificateManager.UI" xmlns:viewmodel="clr-namespace:CornojoblessCertificateManager.UI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
 		xmlns:behavior="clr-namespace:CornojoblessCertificateManager.UI.Behavior"
 		mc:Ignorable="d"
-        Title="Cornojobless Certificate Manager" Height="700" Width="1200">
+        Title="Cornojobless Certificate Manager" Height="700" Width="1200" WindowStartupLocation="CenterOwner">
 	<DockPanel Margin="10" LastChildFill="False">
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,1">
 
