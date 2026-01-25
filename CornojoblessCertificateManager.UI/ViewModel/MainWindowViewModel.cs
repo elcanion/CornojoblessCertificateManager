@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Collections;
 using System.DirectoryServices.ActiveDirectory;
+using CornojoblessCertificateManager.Core.Utils;
 
 namespace CornojoblessCertificateManager.UI.ViewModel
 {
@@ -119,10 +120,10 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 						};
 
 						var deleteDialogResult = confirmDeleteDialog.ShowDialog();
-						if (deleteDialogResult == true && confirmDeleteDialog.Password.Equals(confirmBackupDialog.Password)) {
+						if (deleteDialogResult == true && !CertificateUtils.ArePasswordsEqual(confirmDeleteDialog.Password, confirmBackupDialog.Password)) {
 							MessageBox.Show("Invalid password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 							
-						} else if (deleteDialogResult == true && confirmDeleteDialog.Password == confirmBackupDialog.Password) {
+						} else if (deleteDialogResult == true && CertificateUtils.ArePasswordsEqual(confirmDeleteDialog.Password, confirmBackupDialog.Password)) {
 							var deleteCertificatesRequest = new CertificateDeleteRequest {
 								Location = SelectedStoreLocation,
 								Certificates = SelectedCertificates,
