@@ -2,8 +2,10 @@
 using CornojoblessCertificateManager.Core.Services;
 using CornojoblessCertificateManager.UI.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.DirectoryServices.ActiveDirectory;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Windows;
@@ -30,19 +32,8 @@ public partial class MainWindow : Window
 		DataContext = viewModel;
 		InitializeComponent();
 	}
-
-	private void OnLoaded(object sender, RoutedEventArgs e) {
-		throw new NotImplementedException();
-	}
-
-	private void OnLoad(object sender, RoutedEventArgs e) {
-		throw new NotImplementedException();
-	}
-
-	private void OnRemove(object sender, RoutedEventArgs e) {
-		OnLoad(null, null);
-	}
 }
+
 public class BoolToVisibilityConverter : IValueConverter {
 	public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		=> (value is true) ? Visibility.Visible : Visibility.Collapsed;
