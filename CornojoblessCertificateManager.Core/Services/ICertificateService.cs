@@ -12,7 +12,7 @@ namespace CornojoblessCertificateManager.Core.Services
 {
     public interface ICertificateService
     {
-		IReadOnlyList<CertificateInfo> GetCertificates(CertificateQuery query);
+		IReadOnlyList<CertificateInfo> GetCertificatesInfo(CertificateQuery query);
 		public void BackupCertificates(CertificateBackupRequest request);
 		public void DeleteCertificates(CertificateDeleteRequest request);
 	}

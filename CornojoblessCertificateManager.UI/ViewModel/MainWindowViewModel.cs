@@ -94,19 +94,19 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 		}
 
 		private void backupCertificates() {
-			var backupAndDeleteDialog = new DialogConfirmBackupAndDelete {
+			var confirmBackupDialog = new DialogConfirmBackup {
 				Owner = Application.Current.MainWindow
 			};
 
-			var result = backupAndDeleteDialog.ShowDialog();
-			if (result == true) {
+			var backupDialogResult = confirmBackupDialog.ShowDialog();
+			if (backupDialogResult == true) {
 				var backupCertificatesRequest = new CertificateBackupRequest {
 					BackupDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
 					"CertificateBackups",
 					DateTime.Now.ToString("yyyMMdd_HHmmss")),
 					Location = SelectedStoreLocation,
 					Certificates = SelectedCertificates,
-					PfxPassword = backupAndDeleteDialog.Password,
+					PfxPassword = confirmBackupDialog.Password,
 				};
 
 				certificateService.BackupCertificates(backupCertificatesRequest);
@@ -114,16 +114,28 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 				var deleteBoxResult = MessageBox.Show("Backup finished, delete certificates?", String.Empty, MessageBoxButton.YesNo);
 				switch (deleteBoxResult) {
 					case MessageBoxResult.Yes:
-						var deleteCertificatesRequest = new CertificateDeleteRequest {
-							Location = SelectedStoreLocation,
-							Certificates = SelectedCertificates,
+						var confirmDeleteDialog = new DialogConfirmDelete {
+							Owner = Application.Current.MainWindow
 						};
-						certificateService.DeleteCertificates(deleteCertificatesRequest);
+
+						var deleteDialogResult = confirmDeleteDialog.ShowDialog();
+						if (deleteDialogResult == true && confirmDeleteDialog.Password.Equals(confirmBackupDialog.Password)) {
+							MessageBox.Show("Invalid password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+							
+						} else if (deleteDialogResult == true && confirmDeleteDialog.Password == confirmBackupDialog.Password) {
+							var deleteCertificatesRequest = new CertificateDeleteRequest {
+								Location = SelectedStoreLocation,
+								Certificates = SelectedCertificates,
+							};
+							certificateService.DeleteCertificates(deleteCertificatesRequest);
+						}
 						break;
 
 					case MessageBoxResult.No:
 						break;
 				}
+
+				loadCertificates();
 			}
 		}
 
@@ -146,7 +158,7 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 				OnlyExportable = OnlyExportable
 			};
 
-			var result = certificateService.GetCertificates(query);
+			var result = certificateService.GetCertificatesInfo(query);
 
 			foreach(var cert in result) {
 				Certificates.Add(cert);

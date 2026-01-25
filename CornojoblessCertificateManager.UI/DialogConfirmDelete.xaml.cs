@@ -15,24 +15,35 @@ using System.Windows.Shapes;
 
 namespace CornojoblessCertificateManager.UI
 {
-    /// <summary>
-    /// Interaction logic for DialogConfirmBackupAndDelete.xaml
-    /// </summary>
-    public partial class DialogConfirmBackupAndDelete : Window
+	/// <summary>
+	/// Interaction logic for DialogConfirmDelete.xaml
+	/// </summary>
+	public partial class DialogConfirmDelete : Window
     {
 		public SecureString Password => PasswordBox.SecurePassword;
 
-		public DialogConfirmBackupAndDelete() {
+		public DialogConfirmDelete() {
 			InitializeComponent();
 			Loaded += (_, _) => PasswordBox.Focus();
 		}
 
-		private void continueBackup(object sender, RoutedEventArgs e) {
+		private void continueDelete(object sender, RoutedEventArgs e) {
+			if (Password == null || Password.Length == 0) {
+				MessageBox.Show(
+					"Password cannot be empty.",
+					"Certificate deletion",
+					MessageBoxButton.OK,
+					MessageBoxImage.Warning);
+
+				DialogResult = false;
+				Close();
+				return;
+			}
 			DialogResult = true;
 			Close();
 		}
 
-		private void cancelBackup(object sender, RoutedEventArgs e) {
+		private void cancelDelete(object sender, RoutedEventArgs e) {
 			DialogResult = false;
 			Close();
 		}

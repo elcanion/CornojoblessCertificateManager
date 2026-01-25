@@ -2,7 +2,6 @@
 using CornojoblessCertificateManager.Core.Queries;
 using CornojoblessCertificateManager.Core.Requests;
 using CornojoblessCertificateManager.Core.Utils;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -10,7 +9,7 @@ namespace CornojoblessCertificateManager.Core.Services
 {
     public class CertificateService : ICertificateService
     {
-		public IReadOnlyList<CertificateInfo> GetCertificates(CertificateQuery query) {
+		public IReadOnlyList<CertificateInfo> GetCertificatesInfo(CertificateQuery query) {
 			using var store = new X509Store(StoreName.My, query.StoreLocation);
 			store.Open(OpenFlags.ReadOnly);
 
@@ -63,7 +62,44 @@ namespace CornojoblessCertificateManager.Core.Services
 		}
 
 		public void DeleteCertificates(CertificateDeleteRequest request) {
-			throw new NotImplementedException();
+			using var store = new X509Store(StoreName.My, request.Location);
+			store.Open(OpenFlags.ReadWrite);
+
+			foreach (var info in request.Certificates) {
+				var x509cert = store.Certificates
+					.Find(X509FindType.FindByThumbprint, info.Thumbprint, validOnly: false)
+					.Cast<X509Certificate2>()
+					.FirstOrDefault();
+
+				if (x509cert != null) {
+					if (x509cert.HasPrivateKey) {
+						using var rsa = x509cert.GetRSAPrivateKey();
+
+						if (rsa is RSACng rsaCng) {
+							rsaCng.Key.Delete();
+
+						} else if (rsa is RSACryptoServiceProvider rsaCsp && OperatingSystem.IsWindows()) {
+							var csp = rsaCsp.CspKeyContainerInfo;
+
+							if (!csp.Removable) {
+								var parameters = new CspParameters {
+									ProviderType = csp.ProviderType,
+									KeyContainerName = csp.KeyContainerName,
+									Flags = CspProviderFlags.UseExistingKey | CspProviderFlags.NoPrompt,
+								};
+
+								using var provider = new RSACryptoServiceProvider(parameters);
+								provider.PersistKeyInCsp = false;
+								provider.Clear();
+							}
+						}
+					}
+
+					store.Remove(x509cert);
+				}
+
+			}
+			store.Close();
 		}
 	}
 }

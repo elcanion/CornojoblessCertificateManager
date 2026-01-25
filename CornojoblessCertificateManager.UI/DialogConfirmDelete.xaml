@@ -1,11 +1,11 @@
-﻿<Window x:Class="CornojoblessCertificateManager.UI.DialogConfirmBackupAndDelete"
+﻿<Window x:Class="CornojoblessCertificateManager.UI.DialogConfirmDelete"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CornojoblessCertificateManager.UI"
         mc:Ignorable="d"
-        Title="Backup certificates" Width="420" Height="170"
+        Title="Delete certificates" Width="420" Height="170"
 		WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 	<DockPanel LastChildFill="True">
 		<Grid Margin="16">
@@ -16,12 +16,12 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 
-			<TextBlock Grid.Row="0" Text="New password:" Margin="0,0,0,6" FontSize="13"/>
+			<TextBlock Grid.Row="0" Text="Confirm password:" Margin="0,0,0,6" FontSize="13"/>
 			<PasswordBox x:Name="PasswordBox" Grid.Row="1" Height="24" Padding="0" FontSize="13"/>
 			<Border DockPanel.Dock="Bottom"  Grid.Row="2">
 				<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-					<Button Content="Continue" Width="80" Margin="0,0,8,0" IsDefault="True" Click="continueBackup"/>
-					<Button Content="Cancel" Width="80" IsCancel="True" Click="cancelBackup"/>
+					<Button Content="Continue" Width="80" Margin="0,0,8,0" IsDefault="True" Click="continueDelete"/>
+					<Button Content="Cancel" Width="80" IsCancel="True" Click="cancelDelete"/>
 				</StackPanel>
 			</Border>
 		</Grid>
