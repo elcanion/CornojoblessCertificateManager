@@ -1,6 +1,9 @@
 ﻿using CornojoblessCertificateManager.Core.Model;
 using CornojoblessCertificateManager.Core.Queries;
 using CornojoblessCertificateManager.Core.Requests;
+using CornojoblessCertificateManager.Core.Utils;
+using System.Security;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace CornojoblessCertificateManager.Core.Services
@@ -17,18 +20,16 @@ namespace CornojoblessCertificateManager.Core.Services
 				certs = certs.Where(c => c.NotAfter < DateTime.Now);
 			}
 
+			if (query.OnlyExportable) {
+				certs = certs.Where(c => CertificateUtils.IsExportable(c));
+			}
+
 			if (query.Issuers.Count > 0) {
 				certs = certs.Where(c => 
 					query.Issuers.Any(i => c.Issuer.Contains(i, StringComparison.OrdinalIgnoreCase)));
 			}
 
-			return certs.Select(c => new CertificateInfo {
-				Subject = c.Subject,
-				Issuer = c.Issuer,
-				Thumbprint = c.Thumbprint,
-				Expiration = c.NotAfter,
-				HasPrivateKey = c.HasPrivateKey,
-			}).ToList();
+			return certs.Select(c => new CertificateInfo(c)).ToList();
 		}
 
 		public void BackupCertificates(CertificateBackupRequest request) {
@@ -39,19 +40,26 @@ namespace CornojoblessCertificateManager.Core.Services
 
 			foreach (var info in request.Certificates) {
 				var cert = store.Certificates
-					.Find(X509FindType.FindByThumbprint, info.Thumbprint, validOnly: true)
-					.OfType<X509Certificate2>()
+					.Find(X509FindType.FindByThumbprint, info.Thumbprint, validOnly: false)
+					.Cast<X509Certificate2>()
 					.FirstOrDefault();
 
 				var fileName = $"{cert.Subject}_{cert.Thumbprint}.pfx";
 				var fullPath = Path.Combine(request.BackupDirectory, fileName);
 
-				var bytes = cert.HasPrivateKey
-					? cert.Export(X509ContentType.Pfx, request.PfxPassword)
-					: cert.Export(X509ContentType.Cert);
+				byte[] bytes;
+
+				try {
+					bytes = cert.HasPrivateKey
+						? cert.Export(X509ContentType.Pfx, request.PfxPassword)
+						: cert.Export(X509ContentType.Cert);
+				} catch (CryptographicException) {
+					bytes = cert.Export(X509ContentType.Cert);
+				}
+				
 
 				File.WriteAllBytes(fullPath, bytes);
 			}
 		}
-    }
+	}
 }

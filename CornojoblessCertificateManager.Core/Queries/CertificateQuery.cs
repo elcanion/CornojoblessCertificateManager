@@ -12,6 +12,7 @@ namespace CornojoblessCertificateManager.Core.Queries
 		public StoreLocation StoreLocation { get; init; }
 		public IReadOnlyCollection<string> Issuers { get; init; } = [];
 		public bool OnlyExpired { get; set; }
+		public bool OnlyExportable { get; set; }
 
 	}
 }

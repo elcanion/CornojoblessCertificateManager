@@ -1,5 +1,6 @@
 ﻿using CornojoblessCertificateManager.Core.Model;
 using CornojoblessCertificateManager.Core.Queries;
+using CornojoblessCertificateManager.Core.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace CornojoblessCertificateManager.Core.Services
     public interface ICertificateService
     {
 		IReadOnlyList<CertificateInfo> GetCertificates(CertificateQuery query);
-    }
+		public void BackupCertificates(CertificateBackupRequest request);
+
+	}
 }
