@@ -61,5 +61,9 @@ namespace CornojoblessCertificateManager.Core.Services
 				File.WriteAllBytes(fullPath, bytes);
 			}
 		}
+
+		public void DeleteCertificates(CertificateDeleteRequest request) {
+			throw new NotImplementedException();
+		}
 	}
 }

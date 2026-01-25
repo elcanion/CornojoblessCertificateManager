@@ -100,7 +100,7 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 
 			var result = backupAndDeleteDialog.ShowDialog();
 			if (result == true) {
-				var request = new CertificateBackupRequest {
+				var backupCertificatesRequest = new CertificateBackupRequest {
 					BackupDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
 					"CertificateBackups",
 					DateTime.Now.ToString("yyyMMdd_HHmmss")),
@@ -109,9 +109,21 @@ namespace CornojoblessCertificateManager.UI.ViewModel
 					PfxPassword = backupAndDeleteDialog.Password,
 				};
 
-				certificateService.BackupCertificates(request);
+				certificateService.BackupCertificates(backupCertificatesRequest);
 
-				MessageBox.Show("Backup finished", String.Empty, MessageBoxButton.OK);
+				var deleteBoxResult = MessageBox.Show("Backup finished, delete certificates?", String.Empty, MessageBoxButton.YesNo);
+				switch (deleteBoxResult) {
+					case MessageBoxResult.Yes:
+						var deleteCertificatesRequest = new CertificateDeleteRequest {
+							Location = SelectedStoreLocation,
+							Certificates = SelectedCertificates,
+						};
+						certificateService.DeleteCertificates(deleteCertificatesRequest);
+						break;
+
+					case MessageBoxResult.No:
+						break;
+				}
 			}
 		}
 
