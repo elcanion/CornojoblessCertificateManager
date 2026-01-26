@@ -17,7 +17,7 @@
 
 - **(not so) Advanced filtering**
   - Filter certificates by:
-    - **Issuer**
+    - **Issuer**\*
     - **Expired certificates**
     - **Exportable certificates**
 
@@ -25,12 +25,7 @@
   - Issuer list can be defined directly in configuration
   - Loaded dynamically at runtime
 
-## Stack
-
-- **.NET 8**
-- **pure WPF**
-- **appsettings.json** for configuration
-
+> \*Thumbprint filtering will also be supported in the near future :)
 ## How do I run it?
 
 ### Prerequisites
@@ -61,7 +56,7 @@ Let me be VERY clear:
 - **Things will break** if you delete the wrong certificate.
 - If production goes down, **that’s on you**.
 - Look at `Documents/CertificateBackups` if you *accidentally* delete something.
-- **Do not blame this tool** if your boss asks why TLS or anything else stopped working, blame yourself.
+- **Do not blame this tool** if your boss asks why TLS or anything else stopped working. Blame **yourself** instead.
 
 This application is provided **AS IS**, with **NO WARRANTIES**, **NO SAFETY NET**, and **ZERO RESPONSIBILITY** taken by me. Again, that’s on you.
 
