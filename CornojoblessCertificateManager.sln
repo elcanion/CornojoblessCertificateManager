@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateMana
 		{D8AF6B37-7E46-4CB7-A50A-EB7F546B5722} = {D8AF6B37-7E46-4CB7-A50A-EB7F546B5722}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornojoblessCertificateManager.Tests", "CornojoblessCertificateManager.Tests\CornojoblessCertificateManager.Tests.csproj", "{A8026E5E-A00F-4831-9532-7A04E6554B39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069E03F9-6A07-44DE-A5EA-55A4A4B60BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8026E5E-A00F-4831-9532-7A04E6554B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8026E5E-A00F-4831-9532-7A04E6554B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8026E5E-A00F-4831-9532-7A04E6554B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8026E5E-A00F-4831-9532-7A04E6554B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
